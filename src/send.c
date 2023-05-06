@@ -16,13 +16,19 @@ int get_number() {
 }
 
 int main(int argc, char *argv[]) {
-  int number = 550;
-
   MPI_Init(&argc, &argv);
 
-  int number_of_processes, process_rank;
+  int number_of_processes, process_rank, number, root = 0;
   MPI_Comm_size(MPI_COMM_WORLD, &number_of_processes);
   MPI_Comm_rank(MPI_COMM_WORLD, &process_rank);
+
+  if (process_rank == 0) {
+    printf("Por favor entre com o numero que deseja calcular: \n");
+    scanf("%d", &number);
+    printf("\n");
+  }
+
+  MPI_Bcast(&number, 1, MPI_INT, root, MPI_COMM_WORLD);
 
   int amount_of_numbers_to_check = floor(sqrt(number)) - 1;
 
