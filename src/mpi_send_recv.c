@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     if (meu_ranque == 0) {
         total += 1; /* Acrescenta o dois, que também é primo */
         printf("Quant. de primos entre 1 e n: %d \n", total);
-        printf("Tempo de execucao: %1.3f \n", t_final - t_inicial);
+        printf("Tempo de execucao: %1.6f \n", t_final - t_inicial);
     }
     MPI_Finalize();
     return (0);
