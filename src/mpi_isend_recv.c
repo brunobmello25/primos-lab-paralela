@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &meu_ranque);
   MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
   t_inicial = MPI_Wtime();
+
   inicio = 3 + meu_ranque * 2;
   salto = num_procs * 2;
   for (i = inicio; i <= n; i += salto) {
