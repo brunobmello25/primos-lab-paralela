@@ -1,9 +1,10 @@
 N?=10000000
 P?=4
-TYPE?=mpi_send_recv
+TYPE?=Naive
+PROGRAM?=mpi_send_recv
 
 main:
-	rm -f $(TYPE)
-	mpicc -o $(TYPE) ./src/$(TYPE).c -lm
-	mpirun -n $P --oversubscribe ./$(TYPE) $N
-	rm -f $(TYPE)
+	rm -f $(PROGRAM)
+	mpicc -o $(PROGRAM) ./src/$(TYPE)/$(PROGRAM).c -lm
+	mpirun -n $P --oversubscribe ./$(PROGRAM) $N
+	rm -f $(PROGRAM)
