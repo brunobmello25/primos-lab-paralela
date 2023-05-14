@@ -1,4 +1,5 @@
 #include <math.h>
+#include <openmpi-x86_64/mpi.h>
 #include <openmpi/mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +20,7 @@ int main(int argc, char *argv[]) {
   int i, n;
   int meu_ranque, num_procs, inicio, dest, raiz = 0, tag = 1, stop = 0;
   MPI_Status estado;
+  MPI_Request request;
 
   if (argc < 2) {
     printf("Valor inválido! Entre com um valor do maior inteiro\n");
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
   if (meu_ranque == 0) {
     for (dest = 1, inicio = 3; dest < num_procs && inicio < n;
          dest++, inicio += TAMANHO) {
-      MPI_Send(&inicio, 1, MPI_INT, dest, tag, MPI_COMM_WORLD);
+      MPI_Isend(&inicio, 1, MPI_INT, dest, tag, MPI_COMM_WORLD, &request);
     }
 
     /* Fica recebendo as contagens parciais de cada processo */
@@ -59,7 +61,7 @@ int main(int argc, char *argv[]) {
         stop++;
       }
       /* Envia um nvo pedaço com TAMANHO números para o mesmo processo*/
-      MPI_Send(&inicio, 1, MPI_INT, dest, tag, MPI_COMM_WORLD);
+      MPI_Isend(&inicio, 1, MPI_INT, dest, tag, MPI_COMM_WORLD, &request);
       inicio += TAMANHO;
     }
   } else {
@@ -71,7 +73,7 @@ int main(int argc, char *argv[]) {
           if (primo(i) == 1)
             cont++;
         /* Envia a contagem parcial para o processo mestre */
-        MPI_Send(&cont, 1, MPI_INT, raiz, tag, MPI_COMM_WORLD);
+        MPI_Isend(&cont, 1, MPI_INT, raiz, tag, MPI_COMM_WORLD, &request);
       }
     }
     /* Registra o tempo final de execução */
