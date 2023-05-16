@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
       cont++;
   }
 
-  // Caso só exista o número de processos seja maior que 1, então será
+  // Caso o número de processos seja maior que 1, então será
   // necessário que os processos enviem os resultados para o 0.
   if (num_procs > 1) {
     // Caso o ranque seja diferente de 0, então é preciso enviar o resultado

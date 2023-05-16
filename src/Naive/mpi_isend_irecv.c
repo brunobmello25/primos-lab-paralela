@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
       cont++;
   }
 
-  // Caso só exista o número de processos seja maior que 1, então será
+  // Caso o número de processos seja maior que 1, então será
   // necessário que os processos enviem os resultados para o 0.
   if (num_procs > 1) {
     // Caso o ranque seja diferente de 0, então é preciso enviar o resultado
@@ -48,8 +48,8 @@ int main(int argc, char *argv[]) {
       // somar na variável total.
     } else {
       total = cont;
-      // Laço para executar o MPI_Recv para a quantidade de processos que irão
-      // enviar para o processo 0.
+      // Laço para executar o MPI_IRecv e MPI_Wait para a quantidade de
+      // processos que irão enviar para o processo 0.
       for (int source = 1; source < num_procs; source++) {
         // Endereço onde os dados serão armazenados quando chegarem ao processo
         // 0.
