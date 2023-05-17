@@ -33,15 +33,15 @@ int main(int argc, char *argv[]) {
   MPI_Comm_rank(MPI_COMM_WORLD, &meu_ranque);
   MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
-  /* Registra o tempo inicial de execução do programa */
-  t_inicial = MPI_Wtime();
-
   /* Se houver menos que dois processos aborta */
   if (num_procs < 2) {
     printf("Este programa deve ser executado com no mínimo dois processos.\n");
     MPI_Abort(MPI_COMM_WORLD, 1);
     return (1);
   }
+
+  /* Registra o tempo inicial de execução do programa */
+  t_inicial = MPI_Wtime();
 
   /* Envia pedaços com TAMANHO números para cada processo */
   if (meu_ranque == 0) {
@@ -101,4 +101,3 @@ void print_if_root(int rank, char *data) {
     printf("%s\n", data);
   }
 }
-

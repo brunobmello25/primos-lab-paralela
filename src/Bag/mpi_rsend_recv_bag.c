@@ -1,5 +1,5 @@
-#include "mpi.h"
 #include <math.h>
+#include <openmpi/mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define TAMANHO 500000
@@ -31,20 +31,24 @@ int main(int argc, char *argv[]) { /* mpi_primosbag.c  */
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &meu_ranque);
   MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
+
   /* Se houver menos que dois processos aborta */
   if (num_procs < 2) {
     printf("Este programa deve ser executado com no mínimo dois processos.\n");
     MPI_Abort(MPI_COMM_WORLD, 1);
     return (1);
   }
+
   /* Registra o tempo inicial de execução do programa */
   t_inicial = MPI_Wtime();
+
   /* Envia pedaços com TAMANHO números para cada processo */
   if (meu_ranque == 0) {
     for (dest = 1, inicio = 3; dest < num_procs && inicio < n;
          dest++, inicio += TAMANHO) {
       MPI_Rsend(&inicio, 1, MPI_INT, dest, tag, MPI_COMM_WORLD);
     }
+
     /* Fica recebendo as contagens parciais de cada processo */
     while (stop < (num_procs - 1)) {
       MPI_Recv(&cont, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD,

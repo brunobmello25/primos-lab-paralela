@@ -49,8 +49,6 @@ int main(int argc, char *argv[]) { /* mpi_primosbag.c  */
     }
     /* Fica recebendo as contagens parciais de cada processo */
     while (stop < (num_procs - 1)) {
-      // MPI_Recv(&cont, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG,
-      // MPI_COMM_WORLD, &estado);
       MPI_Irecv(&cont, 1, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD,
                 &request);
       MPI_Wait(&request, &estado);
@@ -68,8 +66,6 @@ int main(int argc, char *argv[]) { /* mpi_primosbag.c  */
   } else {
     /* Cada processo escravo recebe o início do espaço de busca */
     while (estado.MPI_TAG != 99) {
-      // MPI_Recv(&inicio, 1, MPI_INT, raiz, MPI_ANY_TAG, MPI_COMM_WORLD,
-      // &estado);
       MPI_Irecv(&inicio, 1, MPI_INT, raiz, MPI_ANY_TAG, MPI_COMM_WORLD,
                 &request);
       MPI_Wait(&request, &estado);
